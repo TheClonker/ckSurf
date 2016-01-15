@@ -900,8 +900,6 @@ public void OnMapStart()
 	* 14. Get dynamic timelimit (db_GetDynamicTimelimit)
 	* -> loadAllClientSettings
 	*/
-	if (!g_bRenaming && !g_bInTransactionChain)
-		db_selectMapZones();
 	
 	//workshop fix
 	char mapPieces[6][128];
@@ -911,6 +909,10 @@ public void OnMapStart()
 	ExplodeString(g_szMapName, "_", g_szMapPrefix, 2, 32);
 	//sv_pure 1 could lead to problems with the ckSurf models
 	ServerCommand("sv_pure 0");
+
+	//load Zones from DB
+	if (!g_bRenaming && !g_bInTransactionChain)
+		db_selectMapZones();
 	
 	//reload language files
 	LoadTranslations("ckSurf.phrases");
